@@ -10,12 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_23_154714) do
+ActiveRecord::Schema.define(version: 2019_11_30_224639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
+    t.integer "white_player_id"
+    t.integer "black_player_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["black_player_id"], name: "index_games_on_black_player_id"
+    t.index ["white_player_id", "black_player_id"], name: "index_games_on_white_player_id_and_black_player_id"
+  end
+
+  create_table "moves", force: :cascade do |t|
+    t.integer "piece_id"
+    t.integer "player_id"
+    t.integer "game_id"
+    t.string "previous_position"
+    t.string "current_position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_moves_on_game_id"
+    t.index ["piece_id", "player_id", "game_id"], name: "index_moves_on_piece_id_and_player_id_and_game_id"
+    t.index ["player_id", "game_id"], name: "index_moves_on_player_id_and_game_id"
+  end
+
+  create_table "pieces", force: :cascade do |t|
+    t.string "piece_type"
+    t.string "piece_color"
+    t.string "starting_position"
+    t.text "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
