@@ -1,3 +1,4 @@
+
 class GamesController < ApplicationController
 	def index
 	end
@@ -10,4 +11,5 @@ class GamesController < ApplicationController
 	
 	def show
 	end
+
 end
