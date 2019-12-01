@@ -44,7 +44,6 @@ SimpleForm.setup do |config|
   # add validation classes to `input_field`
   config.input_field_error_class = 'is-invalid'
   config.input_field_valid_class = 'is-valid'
-
   # vertical forms
   #
   # vertical default_wrapper
@@ -266,6 +265,7 @@ SimpleForm.setup do |config|
     b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
+
   # bootstrap custom forms
   #
   # custom input for boolean
@@ -402,13 +402,13 @@ SimpleForm.setup do |config|
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
-
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :vertical_form
 
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
   config.wrapper_mappings = {
+
     boolean: :vertical_boolean,
     check_boxes: :vertical_collection,
     date: :vertical_multi_select,
