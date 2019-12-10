@@ -23,7 +23,13 @@ class GamesController < ApplicationController
 	private
 
 	def is_Obstructed?(start_x,start_y,dest_x,dest_y)
-		
+		#return
+		# { 
+		#	true : if there is obstruction
+		#   false : if there is no obstruction
+		#   "Invalid Input": if input is invalid
+		#}
+
 		#identify smaller and higher x and y position 
 		small_x,small_y,high_x,high_y = start_x,start_y,dest_x,dest_y
 		if start_x > dest_x; small_x,high_x = dest_x,start_x end
