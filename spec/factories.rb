@@ -5,11 +5,13 @@ FactoryBot.define do
   end
 
   factory :piece do
-    
+    x_position {0}
+    y_position {0}
   end
 
   factory :game do
-    
+    white_player_id {nil}
+    black_player_id {nil}
   end
 
   factory :user do

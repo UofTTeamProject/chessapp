@@ -40,5 +40,32 @@ RSpec.describe Game, type: :model do
       assert available_games.first != game
     end
   end
+
+  describe "Game#full?" do
+    it "is full if there is a white player and a black player" do
+      game = Game.new
+      game.white_player_id = 1
+      game.black_player_id = 2
+      game.save
+      game.reload
+      expect(game.full?).to be true
+    end
+
+    it "is not full if there is a white player but no black player" do
+      game = Game.new
+      game.white_player_id = 1
+      game.save
+      game.reload
+      expect(game.full?).to be false
+    end
+
+    it "is not full if there is a black player but no white player" do
+      game = Game.new
+      game.black_player_id = 1
+      game.save
+      game.reload
+      expect(game.full?).to be false
+    end
+  end
 end
 

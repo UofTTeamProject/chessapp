@@ -25,7 +25,8 @@
 <div>
   <% @games.each do |game| %>
     <div>
-      <a href="#">Play with <%= game.available_player.email %></a>
+      <%= link_to "Play with #{game.available_player.email}", join_game_path(game.id), :method => :put %>
     </div>
   <% end %>
 </div>
+
