@@ -10,4 +10,12 @@ class Game < ApplicationRecord
       User.find(black_player_id)
     end
   end
+
+  def full?
+    if white_player_id && black_player_id
+      return true
+    else
+      return false
+    end
+  end
 end

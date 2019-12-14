@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :games, only: [:new, :show, :create]
   # root "example#index" - This line added to verify the testing framework works well
+  put 'join_game/:id', :to => 'games#join', :as => :join_game                                      
 end

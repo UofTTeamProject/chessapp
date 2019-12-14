@@ -1,5 +1,7 @@
 class Piece < ApplicationRecord
+
     #main base class
+
 end
 
 class Pawn < Piece
