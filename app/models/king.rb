@@ -8,7 +8,7 @@ class King < Piece
         if (start_x.to_i - dest_x.to_i).abs <=1 && (start_y.to_i - dest_y.to_i).abs <=1 
             return true
         else
-            puts "I am here"
+            #puts "I am here"
             return false
         end
     end
