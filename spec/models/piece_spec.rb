@@ -22,7 +22,5 @@ RSpec.describe Piece, type: :model do
     # it "does not capture a piece that was at the space it's moving to if that piece belongs to another game" do
     #   #make sure the piece does move, but does not capture pieces from other games with the new_x and new_y positions 
     # end
-
-
   end
 end
