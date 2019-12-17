@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
   has_many :moves
+  has_many :pieces
   #belongs_to :user
   scope :available, -> {where(white_player_id: nil).or(where(black_player_id: nil))}
 
