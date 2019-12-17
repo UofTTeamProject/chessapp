@@ -1,4 +1,5 @@
 class Piece < ApplicationRecord
+
   belongs_to :game
     #main base class
   def move_to(new_x, new_y)
@@ -13,22 +14,12 @@ class Piece < ApplicationRecord
 end
 
 class Pawn < Piece
+
+    #main base class
+    has_many :moves
+
 end
 
-class Knight < Piece
-end
-
-class Bishop < Piece
-end
-
-class Rook < Piece
-end
-
-class Queen < Piece
-end
-
-class King < Piece
-end
 
 
 

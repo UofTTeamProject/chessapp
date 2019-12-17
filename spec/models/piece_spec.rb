@@ -34,6 +34,7 @@ RSpec.describe Piece, type: :model do
       expect(piece_2.captured).to be false
     end
 
+
     it "does not capture a piece that was at the space it's moving to if that piece belongs to another game" do
       piece_1 = FactoryBot.create(:piece)
       piece_2 = FactoryBot.create(:piece, piece_color: piece_1.piece_color, x_position: 1, y_position: 1)
@@ -45,6 +46,11 @@ RSpec.describe Piece, type: :model do
       expect(piece_2.captured).to be false
     end
 
+
+
+    # it "does not capture a piece that was at the space it's moving to if that piece belongs to another game" do
+    #   #make sure the piece does move, but does not capture pieces from other games with the new_x and new_y positions 
+    # end
 
   end
 end
