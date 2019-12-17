@@ -1,5 +1,5 @@
-
 class GamesController < ApplicationController
+	attr_accessor :is_Obstructed,:timepass
 	def index
 		
 	end
@@ -13,7 +13,7 @@ class GamesController < ApplicationController
 	end
 	
 	def show
-		puts is_Obstructed?(4,1,3,5)
+		#puts is_Obstructed?(4,1,3,5)
 	end
 
 	def update
@@ -38,7 +38,8 @@ class GamesController < ApplicationController
 
 	private
 
-	def is_Obstructed?(start_x,start_y,dest_x,dest_y)
+	def is_Obstructed(start_x,start_y,dest_x,dest_y)
+		#it is assumed that checks like both start and destiantion are not same are already done. Hence not checked here
 		#return
 		# { 
 		#	true : if there is obstruction
@@ -96,4 +97,5 @@ class GamesController < ApplicationController
 	def current_game
 		@current_game ||= Game.find(params[:id])
 	end
+
 end
