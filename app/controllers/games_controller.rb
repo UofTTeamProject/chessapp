@@ -1,27 +1,31 @@
 
 class GamesController < ApplicationController
 	def index
+	 @game= Game.all
 		
 	end
 
 	def new
-
+		@game=Game.new
 	end
 
 	def create
-    Game.create(white_player_id: current_user.id)
+    	@game=Game.create(white_player_id: current_user.id)
+    	redirect_to game_path
 	end
 	
 	def show
 		puts is_Obstructed?(4,1,3,5)
+		@game=Game.find(params[:id])
+		@piece=@game.pieces
 	end
 
 	def update
-
+		@game=Game.find(params[:id])
 	end
 
   def join
-    game = Game.find(game_params[:id])
+    @game = Game.find(params[:id])
     if !game.full? && current_user && game.white_player_id != current_user.id
       game.black_player_id = current_user.id
       game.save
@@ -32,11 +36,13 @@ class GamesController < ApplicationController
   end
 
   private
+
   def game_params
     params.permit(:id)
+    #params.require(:game).permit(:white_player_id, :black_player_id)
   end
 
-	private
+
 
 	def is_Obstructed?(start_x,start_y,dest_x,dest_y)
 		#return

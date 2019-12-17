@@ -6,6 +6,11 @@
             <tr id = <%= column %>>
               <% (1..8).each do |row| %>
                 <td data-x-coord = <%= row %> data-y-coord = <%= column %> class = <%= "#{(column % 2 == row % 2 ? "white-square" : "black-square")}" %> >
+                  <% @pieces.each do |piece| %>
+                    <div class="piece" data-url="<%= game_piece_path(piece.game, piece)%>" data-piece-type="<%= piece.piece_type %>">
+                  <%= image_tag(piece.piece_image) %>
+                </div>
+                  <% end %>
                 </td>
               <% end %>
             </tr>
