@@ -19,4 +19,8 @@ class Game < ApplicationRecord
       return false
     end
   end
+
+  def self.find_by_player_id(player_id)
+    where(white_player_id: player_id).or(where(black_player_id: player_id))
+  end
 end
