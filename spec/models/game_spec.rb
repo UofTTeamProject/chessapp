@@ -7,7 +7,6 @@ RSpec.describe Game, type: :model do
       game.white_player_id = 1
       game.save
       available_games = Game.available
-      puts available_games.inspect
       assert available_games.first == game
     end
 

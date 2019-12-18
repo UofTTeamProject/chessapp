@@ -29,6 +29,8 @@ FactoryBot.define do
   end
 
   factory :piece do
+    game
+    piece_color {"white"}
     x_position {0}
     y_position {0}
   end
