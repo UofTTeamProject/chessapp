@@ -9,7 +9,8 @@ class GamesController < ApplicationController
 	end
 
 	def create
-    Game.create(white_player_id: current_user.id)
+    game = Game.create(white_player_id: current_user.id)
+    redirect_to game
 	end
 	
 	def show
