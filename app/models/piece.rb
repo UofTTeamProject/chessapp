@@ -13,12 +13,7 @@ class Piece < ApplicationRecord
   end
 end
 
-class Pawn < Piece
 
-    #main base class
-    has_many :moves
-
-end
 
 
 

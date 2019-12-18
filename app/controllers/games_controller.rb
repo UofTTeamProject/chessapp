@@ -62,7 +62,7 @@ class GamesController < ApplicationController
 			#puts "Horizontal"
 			for i in small_y..(high_y-1) do
 				#puts "i:" + i.to_s
-				move = current_game.moves.where("current_position = '#{small_x}*#{i+1}'").order('created_at DESC').first
+				move = current_game.pieces.where("current_position = '#{small_x}*#{i+1}'").order('created_at DESC').first
 				if !move.nil?
 					return true
 				end 
@@ -72,7 +72,7 @@ class GamesController < ApplicationController
 			#puts "Vertical"
 			for i in small_x..(high_x-1) do
 				#puts "i:" + i.to_s
-				move = current_game.moves.where("current_position = '#{i+1}*#{small_y}'").order('created_at DESC').first
+				move = current_game.pieces.where("current_position = '#{i+1}*#{small_y}'").order('created_at DESC').first
 				if !move.nil?
 					return true
 				end 
@@ -82,7 +82,7 @@ class GamesController < ApplicationController
 			#puts "Diagonal"
 			(high_x-small_x-1).abs.times do |i|
 				#puts "i:" + i.to_s
-				move = current_game.moves.where("current_position = '#{i+small_x+1}*#{i+small_y+1}'").order('created_at DESC').first
+				move = current_game.pieces.where("current_position = '#{i+small_x+1}*#{i+small_y+1}'").order('created_at DESC').first
 				if !move.nil?
 					return true
 				end 

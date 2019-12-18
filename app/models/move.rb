@@ -1,5 +1,5 @@
 class Move < ApplicationRecord
-    belongs_to :game
+  belongs_to :game
   
   def move_to(new_x, new_y)
     #Look up in in the database, if there is another piece for this piece's game, at the new x and y positions
@@ -18,5 +18,4 @@ class Move < ApplicationRecord
             return false
         end  
     end
-
 end
