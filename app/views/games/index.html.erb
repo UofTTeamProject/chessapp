@@ -1,3 +1,11 @@
+<div>
+  <% @games.each do |game| %>
+    <div>
+      <%= link_to "Play with #{game.available_player.email}", join_game_path(game.id), :method => :put %>
+    </div>
+  <% end %>
+</div>
+
 <h1>welcome to new game</h1>
 ##To display pieces ##hard coded 
 <div class="board"> 

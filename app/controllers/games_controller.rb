@@ -1,7 +1,8 @@
 class GamesController < ApplicationController
 	attr_accessor :is_Obstructed,:timepass
 	def index
-	 @game= Game.all
+		@games = Game.available
+		@game= Game.all
 		
 	end
 
@@ -33,25 +34,23 @@ class GamesController < ApplicationController
 		@game=Game.find(params[:id])
 	end
 
-  def join
-    @game = Game.find(params[:id])
-    if !game.full? && current_user && game.white_player_id != current_user.id
-      game.black_player_id = current_user.id
-      game.save
-      redirect_to game
-    else
-      redirect_to root_path
-    end
-  end
+	def join
+		@game = Game.find(params[:id])
+		if !game.full? && current_user && game.white_player_id != current_user.id
+			game.black_player_id = current_user.id
+			game.save
+			redirect_to game
+		else
+			redirect_to root_path
+		end
+	end
 
-  private
+	private
 
-  def game_params
-    params.permit(:id)
-    #params.require(:game).permit(:white_player_id, :black_player_id)
-  end
-
-
+	def game_params
+		params.permit(:id)
+		#params.require(:game).permit(:white_player_id, :black_player_id)
+	end
 
 	def is_Obstructed(start_x,start_y,dest_x,dest_y)
 		#it is assumed that checks like both start and destiantion are not same are already done. Hence not checked here
