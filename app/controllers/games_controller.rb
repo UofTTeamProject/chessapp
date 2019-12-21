@@ -3,7 +3,7 @@ class GamesController < ApplicationController
 	
 	def index
 		@games = Game.available
-		@game= Game.all
+		@game_user= Game.where(black_player_id:current_user.id).or(Game.where(white_player_id:current_user.id))
 		
 	end
 
@@ -12,25 +12,27 @@ class GamesController < ApplicationController
 	end
 
 	def create
-<<<<<<< HEAD
-    game = Game.create(white_player_id: current_user.id)
-    redirect_to game
+		puts current_user.id
+    	@game=Game.create(white_player_id: current_user.id)
+    	redirect_to game_path(@game)
 	end
 	
 	def show
 		#puts is_Obstructed?(4,1,3,5)
-=======
-    	@game=Game.create(white_player_id: current_user.id)
-    	redirect_to game_path
-	end
-	
-	def show
-		puts is_Obstructed?(4,1,3,5)
-		@game=Game.find(params[:id])
-		@black_player = User.find(@game.black_player_id)
-		@white_player = User.find(@game.white_player_id)
-		@piece=@game.pieces
->>>>>>> prepopulategame
+		#puts "Hello" + params[:id].to_s
+		@game=Game.find_by_id(params[:id])
+		
+		if !@game.blank?
+			if !@game.black_player_id.nil? 
+				@black_player = User.find(@game.black_player_id)
+			else
+				@black_player = nil
+			end
+			@white_player = User.find(@game.white_player_id)
+			@pieces=@game.pieces
+		else
+			render plain: "#{status.to_s.titleize}", status: :not_found
+		end
 	end
 
 	def update
@@ -39,10 +41,10 @@ class GamesController < ApplicationController
 
 	def join
 		@game = Game.find(params[:id])
-		if !game.full? && current_user && game.white_player_id != current_user.id
-			game.black_player_id = current_user.id
-			game.save
-			redirect_to game
+		if !@game.full? && current_user && @game.white_player_id != current_user.id
+			@game.black_player_id = current_user.id
+			@game.save
+			redirect_to game_path(@game)
 		else
 			redirect_to root_path
 		end

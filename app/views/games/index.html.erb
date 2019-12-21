@@ -6,6 +6,14 @@
   <% end %>
 </div>
 
+<div>
+  <% @game_user.each do |game| %>
+    <div>
+      <%= link_to "Open #{game.id}", game_path(game) %>
+    </div>
+  <% end %>
+</div>
+
 <h1>welcome to new game</h1>
 ##To display pieces ##hard coded 
 <div class="board"> 
