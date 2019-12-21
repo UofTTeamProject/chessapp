@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
 	attr_accessor :is_Obstructed,:timepass
+	
 	def index
 		@games = Game.available
 		@game= Game.all
@@ -26,6 +27,8 @@ class GamesController < ApplicationController
 	def show
 		puts is_Obstructed?(4,1,3,5)
 		@game=Game.find(params[:id])
+		@black_player = User.find(@game.black_player_id)
+		@white_player = User.find(@game.white_player_id)
 		@piece=@game.pieces
 >>>>>>> prepopulategame
 	end

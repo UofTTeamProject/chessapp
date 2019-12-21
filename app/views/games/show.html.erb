@@ -1,23 +1,34 @@
-<h1>welcome to new game</h1>
-<div class="board">
-      <table>
-        <tbody>
-          <% (1..8).each do |column| %>
-            <tr id = <%= column %>>
-              <% (1..8).each do |row| %>
-                <td data-x-coord = <%= row %> data-y-coord = <%= column %> class = <%= "#{(column % 2 == row % 2 ? "white-square" : "black-square")}" %> >
-                  <% @pieces.each do |piece| %>
-                    <div class="piece" data-url="<%= game_piece_path(piece.game, piece)%>" data-piece-type="<%= piece.piece_type %>">
-                  <%= image_tag(piece.piece_image) %>
-                </div>
-                  <% end %>
-                </td>
+<h1>welcome to Game No. <%= @game.id %> </h1>
+<div class="board" style="position:relative">
+  <table>
+    <tbody>
+      <% (1..8).each do |column| %>
+        <tr id = <%= column %>>
+          <% (1..8).each do |row| %>
+            <td data-x-coord = <%= row %> data-y-coord = <%= column %> class = <%= "#{(column % 2 == row % 2 ? "white-square" : "black-square")}" %> >
+              <% @pieces.each do |piece| %>
+                <div class="piece" data-url="<%= game_piece_path(piece.game, piece)%>" data-piece-type="<%= piece.piece_type %>">
+              <%= image_tag(piece.piece_image) %>
+            </div>
               <% end %>
-            </tr>
+            </td>
           <% end %>
-        </tbody>
-      </table>
-
-    </div>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="player-info">
+    <span>Black Player: 
+      <% if !@black_player.nil? %>
+        <%= @black_player.email %>
+      <% end %>
+    </span>
+    <span>White Player: 
+      <% if !@white_player.nil? %>
+        <%= @white_player.email %>
+      <% end %>
+    </span>
+</div>
 
    
