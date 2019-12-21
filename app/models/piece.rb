@@ -1,6 +1,7 @@
 class Piece < ApplicationRecord
 
   belongs_to :game
+  has_many :moves
     #main base class
   def move_to(new_x, new_y)
     captured_piece = Piece.where(game_id: self.game_id, x_position: new_x, y_position: new_y).first
@@ -11,9 +12,8 @@ class Piece < ApplicationRecord
       self.save
     end
   end
+	
 end
-
-
 
 
 
