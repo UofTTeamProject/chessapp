@@ -72,7 +72,7 @@ class PiecesController < ApplicationController
 			puts "Horizontal"
 			(high_y-small_y-1).abs.times do |i|
 				puts "i:" + i.to_s
-				move = current_game.pieces.where("x_position = '#{small_x}' AND y_position = '#{small_y+i+1}'")
+				move = Piece.where("x_position = '#{small_x}' AND y_position = '#{small_y+i+1}' AND game_id = '#{current_game.id} '").first
 				if !move.nil?
 					return true
 				end 
@@ -82,17 +82,19 @@ class PiecesController < ApplicationController
 			puts "Vertical"
 			(high_x-small_x-1).abs.times do |i|
 				puts "i:" + i.to_s
-				move = current_game.pieces.where("x_position = '#{high_x+i+1}' AND y_position = '#{small_y}'")
+				puts current_game.id
+				move = Piece.where("x_position = '#{small_x+i+1}' AND y_position = '#{small_y}' AND game_id = '#{current_game.id} '").first
+				#puts move.id
 				if !move.nil?
 					return true
 				end 
 			end
-		elsif (high_x-small_x) == (high_y-small_y)
+		elsif (high_x-small_x).abs == (high_y-small_y).abs
 			#check for diagonal obstruction
 			#puts "Diagonal"
 			(high_x-small_x-1).abs.times do |i|
 				#puts "i:" + i.to_s
-				move = current_game.pieces.where("x_position = '#{i+small_x+1}' AND y_position = '#{i+small_y+1}'")
+				move = Piece.where("x_position = '#{i+small_x+1}' AND y_position = '#{i+small_y+1}' AND game_id = '#{current_game.id} '")
 				if !move.nil?
 					return true
 				end 
