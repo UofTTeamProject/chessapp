@@ -1,6 +1,6 @@
 
 FactoryBot.define do
-  factory :king do
+  factory :king, class: "King" do
     
   end
 
@@ -8,7 +8,7 @@ FactoryBot.define do
     
   end
 
-  factory :rook do
+  factory :rook, class: "Rook" do
     
   end
 
@@ -16,7 +16,7 @@ FactoryBot.define do
     
   end
 
-  factory :knight do
+  factory :knight, class: "Knight" do
     
   end
 
