@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 2019_12_16_230302) do
     t.text "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type"
     t.integer "x_position"
     t.integer "y_position"
     t.boolean "captured", default: false
+    t.string "type"
     t.integer "game_id"
     t.index ["game_id"], name: "index_pieces_on_game_id"
   end
