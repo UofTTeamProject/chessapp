@@ -20,6 +20,7 @@ $(function(){
           },
           error: function(jqXHR,textStatus,errorThrown){
             $(dropped).css({top: 0, left: 0});
+            $(dropped).show();
             alert(jqXHR.responseText);
             
           },

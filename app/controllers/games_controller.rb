@@ -29,7 +29,7 @@ class GamesController < ApplicationController
 				@black_player = nil
 			end
 			@white_player = User.find(@game.white_player_id)
-			@pieces=@game.pieces
+			@pieces=@game.pieces.where(captured:false)
 		else
 			render plain: "#{status.to_s.titleize}", status: :not_found
 		end
