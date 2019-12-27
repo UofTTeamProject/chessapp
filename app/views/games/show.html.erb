@@ -1,3 +1,36 @@
+<script>
+$(function(){
+    $(".piece-drag").draggable({ containment: ".board"});
+    $("td").droppable({
+      drop: function(event,ui){
+        var dropped = ui.draggable;
+        var droppedOn = $(this);
+        if($(droppedOn).children().length > 0){
+          $(dropped).hide();
+        };
+        $.ajax({
+          type: 'PUT',
+          url: $(dropped).data("url"),
+          dataType: 'json',
+          data: {piece : { x_position: $(droppedOn).data("x-coord") , y_position: $(droppedOn).data("y-coord") } },
+          success: function(data,testStatus,jqXHR){
+            $(droppedOn).empty();
+            $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
+            $(dropped).show();
+          },
+          error: function(jqXHR,textStatus,errorThrown){
+            $(dropped).css({top: 0, left: 0});
+            alert(jqXHR.responseText);
+            
+          },
+        });
+        
+      }
+    });
+    $('td').not('td:empty').droppable();
+});
+</script>
+
 <h1>welcome to Game No. <%= @game.id %> </h1>
 <div class="board" style="position:relative">
   <table>
@@ -5,15 +38,18 @@
       <% (1..8).each do |column| %>
         <tr id = <%= column %>>
           <% (1..8).each do |row| %>
-            <td data-x-coord = <%= row %> data-y-coord = <%= column %> class = <%= "#{(column % 2 == row % 2 ? "white-square" : "black-square")}" %> >
-              <% @piece = @pieces.select{ |piece_temp| piece_temp.x_position==column && piece_temp.y_position==row && piece_temp.captured==false } %>
-              <% #@piece = @pieces.where(x_position:column,y_position:row).first %>
-              <% if !@piece[0].nil? %>
-                <div class="piece" data-url="<%= game_piece_path(@game, @piece[0])%>" data-piece-type="<%= @piece[0].type %>">
-                  <%= image_tag @piece[0].image_url, class: 'img-fluid' %>
-                </div>
-              <% else %>
-              <% end %>
+            <td data-y-coord = "<%= row %>" data-x-coord = "<%= column %>" class = <%= (column % 2 == row % 2) ? "white-square" : "black-square"  %> >
+                <% @piece = @pieces.select{ |piece_temp| piece_temp.x_position==column && piece_temp.y_position==row && piece_temp.captured==false } %>
+                <% #@piece = @pieces.where(x_position:column,y_position:row).first %>
+                <% if !@piece[0].nil? %>
+                  <div class="piece piece-drag" data-url="<%= game_piece_path(@game, @piece[0])%>" data-piece-type="<%= @piece[0].type %>">
+                    <% #link_to game_piece_path(@game,@piece) do %>
+                      <%= image_tag @piece[0].image_url, class: 'img-fluid ' %>
+                    <% #end %>
+                  </div>
+                <% else %>
+                <% end %>
+              
             </td>
           <% end %>
         </tr>

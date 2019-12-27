@@ -9,13 +9,13 @@ class Piece < ApplicationRecord
       puts temp.id.to_s
     end
     #print captured_piece.id.to_s + " " + captured_piece.piece_color + " " +self.piece_color
-    puts " "
     if captured_piece.first && captured_piece.first.piece_color != self.piece_color
       captured_piece.first.update_attributes(captured: true)
     end
     self.x_position = new_x
     self.y_position = new_y
-    self.save
+    return self.save
+    
   end
 	
 end
