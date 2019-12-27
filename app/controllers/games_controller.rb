@@ -2,8 +2,11 @@ class GamesController < ApplicationController
 	attr_accessor :is_Obstructed,:timepass
 	
 	def index
-		@games = Game.available
-		@game_user= Game.where(black_player_id:current_user.id).or(Game.where(white_player_id:current_user.id))
+		if current_user 
+			@games = Game.available
+			@game_user= Game.where('status = ? AND ( black_player_id = ? OR white_player_id = ? )', -1,current_user.id,current_user.id)
+			@game_user_won = Game.where(status:current_user.id)
+		end
 		
 	end
 
@@ -13,7 +16,7 @@ class GamesController < ApplicationController
 
 	def create
 		puts current_user.id
-    	@game=Game.create(white_player_id: current_user.id)
+    	@game=Game.create(white_player_id: current_user.id,status:-1)
     	redirect_to game_path(@game)
 	end
 	
@@ -29,7 +32,7 @@ class GamesController < ApplicationController
 				@black_player = nil
 			end
 			@white_player = User.find(@game.white_player_id)
-			@pieces=@game.pieces.where(captured:false)
+			@pieces=@game.pieces
 		else
 			render plain: "#{status.to_s.titleize}", status: :not_found
 		end
@@ -37,6 +40,18 @@ class GamesController < ApplicationController
 
 	def update
 		@game=Game.find(params[:id])
+		if @game.white_player_id == nil || @game.black_player_id == nil 
+			alert = "Why do you want to forfeit when your opponent do not exist?"
+			redirect_to game_path(@game), alert:alert
+		else
+			if @game.white_player_id == current_user.id
+				winner = @game.black_player_id
+			else
+				winner = @game.white_player_id
+			end
+			@game.update_attributes(status:winner)
+		end
+		redirect_to root_path
 	end
 
 	def join

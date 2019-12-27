@@ -16,7 +16,6 @@ class PiecesController < ApplicationController
 	end
 
 	def update
-		puts "Hello"
 		@piece=Piece.find_by_id(params[:id])
 		if !@piece.blank?
 			isObstructed = is_Obstructed(@piece.x_position,@piece.y_position,piece_params[:x_position].to_i,piece_params[:y_position].to_i)
@@ -92,9 +91,10 @@ class PiecesController < ApplicationController
 		elsif (high_x-small_x).abs == (high_y-small_y).abs
 			#check for diagonal obstruction
 			#puts "Diagonal"
+			
 			(high_x-small_x-1).abs.times do |i|
-				#puts "i:" + i.to_s
-				move = Piece.where("x_position = '#{i+small_x+1}' AND y_position = '#{i+small_y+1}' AND game_id = '#{current_game.id} '")
+				#puts "i:" + i.to_s + " current_game: "+ current_game.id.to_s
+				move = Piece.where("x_position = '#{i+small_x+1}' AND y_position = '#{i+small_y+1}' AND game_id = '#{current_game.id} '").first
 				if !move.nil?
 					return true
 				end 

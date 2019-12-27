@@ -48,7 +48,6 @@ $(function(){
                       <%= image_tag @piece[0].image_url, class: 'img-fluid ' %>
                     <% #end %>
                   </div>
-                <% else %>
                 <% end %>
               
             </td>
@@ -59,17 +58,44 @@ $(function(){
   </table>
 </div>
 <div class="player-info">
-    <span>Black Player: 
+    <div class="black-player-zone">
+      <span>Black Player: 
       <% if !@black_player.nil? %>
         <%= @black_player.email %>
+        <% if @black_player == current_user %>
+          <%=link_to "Forfeit", game_path(@game, forfeit:0),:method => :put, class: 'btn btn-primary' %> 
+        <% end %>
       <% end %>
-    </span>
+      </span>
+      <div>
+        <% @pieces_captured = @pieces.select{ |piece_temp| piece_temp.captured==true && piece_temp.piece_color=="black" } %>
+        <% @pieces_captured.each do |piece| %>
+          <div data-piece-type="<%= piece.type %>">
+            <%= image_tag piece.image_url, class: 'img-fluid ',style: "height:40px;width:40px" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <p></p>
-    <span>White Player: 
-      <% if !@white_player.nil? %>
-        <%= @white_player.email %>
-      <% end %>
-    </span>
+    <div class="white-player-zone">
+      <span>White Player: 
+        <% if !@white_player.nil? %>
+          <%= @white_player.email %>
+          <% if @white_player== current_user %>
+            <%=link_to "Forfeit", game_path(@game, forfeit:0),:method => :put, class: 'btn btn-primary' %> 
+          <% end %>
+        <% end %>
+      </span>
+      <div>
+        <% @pieces_captured = @pieces.select{ |piece_temp| piece_temp.captured==true && piece_temp.piece_color=="white" } %>
+          <% @pieces_captured.each do |piece| %>
+            <div data-piece-type="<%= piece.type %>">
+              <%= image_tag piece.image_url, class: 'img-fluid ',style: "height:40px;width:40px" %>
+            </div>
+        <% end %>
+      </div>
+    <div>
+    
 </div>
 
    
