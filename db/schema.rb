@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 2019_12_16_230302) do
     t.integer "x_position"
     t.integer "y_position"
     t.boolean "captured", default: false
-    t.integer "game_id"
     t.string "type"
+    t.integer "game_id"
     t.index ["game_id"], name: "index_pieces_on_game_id"
   end
 

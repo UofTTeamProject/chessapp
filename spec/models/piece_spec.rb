@@ -4,6 +4,7 @@ RSpec.describe Piece, type: :model do
   describe "Piece#move_to" do
     it "moves a piece to an empty square" do
       piece = FactoryBot.create(:piece)
+      #puts piece.game_id
       expect(piece.x_position).to eq(0)
       expect(piece.y_position). to eq(0)
       piece.move_to(1, 1)
@@ -14,12 +15,13 @@ RSpec.describe Piece, type: :model do
 
     it "captures a piece that was at the space it's moving to" do
       piece_1 = FactoryBot.create(:piece)
-      piece_2 = FactoryBot.create(:piece, piece_color: "black", game: piece_1.game, x_position: 1, y_position: 1)
-      piece_1.move_to(1, 1)
+      piece_2 = FactoryBot.create(:piece, piece_color: "black", game: piece_1.game, x_position: 2, y_position: 2)
+      #print piece_2.piece_color
+      piece_1.move_to(2, 2)
       piece_1.reload
       piece_2.reload
-      expect(piece_1.x_position).to eq(1)
-      expect(piece_1.y_position).to eq(1)
+      expect(piece_1.x_position).to eq(2)
+      expect(piece_1.y_position).to eq(2)
       expect(piece_2.captured).to be true
     end
 

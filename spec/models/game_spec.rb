@@ -78,6 +78,7 @@ RSpec.describe Game, type: :model do
     it "should show the game if you are the black player" do
       user1 = FactoryBot.create(:user)
       game = FactoryBot.create(:game, black_player_id: user1.id)
+      game=FactoryBot.create(:game, black_player_id: user1.id)
       found_game = Game.find_by_player_id(user1.id).first
       expect(game.id).to eq(found_game.id)
     end
