@@ -50,8 +50,9 @@ class GamesController < ApplicationController
 				winner = @game.white_player_id
 			end
 			@game.update_attributes(status:winner)
+			redirect_to root_path
 		end
-		redirect_to root_path
+		
 	end
 
 	def join
