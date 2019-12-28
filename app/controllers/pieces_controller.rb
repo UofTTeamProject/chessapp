@@ -80,8 +80,8 @@ class PiecesController < ApplicationController
 			#check for horizontal obstruction
 			puts "Vertical"
 			(high_x-small_x-1).abs.times do |i|
-				puts "i:" + i.to_s
-				puts current_game.id
+				#puts "i:" + i.to_s
+				#puts current_game.id
 				move = Piece.where("x_position = '#{small_x+i+1}' AND y_position = '#{small_y}' AND game_id = '#{current_game.id} '").first
 				#puts move.id
 				if !move.nil?

@@ -4,7 +4,11 @@ FactoryBot.define do
     
   end
 
-  factory :queen do
+  factory :bishop, class: "Bishop" do
+    
+  end
+
+  factory :queen, class: "Queen" do
     
   end
 
@@ -12,15 +16,11 @@ FactoryBot.define do
     
   end
 
-  factory :bishop do
-    
-  end
-
   factory :knight, class: "Knight" do
     
   end
 
-  factory :pawn do
+  factory :pawn, class: "Pawn" do
     
   end
 

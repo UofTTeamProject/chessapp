@@ -15,7 +15,7 @@ class GamesController < ApplicationController
 	end
 
 	def create
-		puts current_user.id
+		#puts current_user.id
     	@game=Game.create(white_player_id: current_user.id,status:-1)
     	redirect_to game_path(@game)
 	end
