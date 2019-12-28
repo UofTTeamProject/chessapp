@@ -1,1 +1,76 @@
-<h1> welcome to the Chess game</h1>
+<div>
+  <% if @games %>
+    <% @games.each do |game| %>
+      <div>
+        <%= link_to "Play with #{game.available_player.email}", join_game_path(game.id), :method => :put %>
+      </div>
+    <% end %>
+  <% end %>
+  
+</div>
+
+<div>
+  <%if @game_user %>
+    <% @game_user.each do |game| %>
+      <div>
+        <%= link_to "Open #{game.id}", game_path(game) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<h1>welcome to new game</h1>
+##To display pieces ##hard coded 
+<div class="board"> 
+      <table>
+        <tbody>
+          <% (1..8).each do |row| %>
+            <tr id = <%= row %>>
+              <% (1..8).each do |column| %>
+                <td data-x-coord = <%= column %> data-y-coord = <%= row %> class = <%= "#{(column % 2 == row % 2 ? "white-square" : "black-square")}" %> >
+                 <% if row==2 %>
+                  <%= image_tag 'pawnblack.png', class: 'img-fluid' %>
+                <% end %>
+                <% if row==7 %>
+                  <%= image_tag 'pawnwhite.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 1 && column==1) || (row ==1 && column == 8) %>
+                  <%= image_tag 'rookblack.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 8 && column==1) || (row ==8 && column == 8) %>
+                  <%= image_tag 'rookwhite.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 1 && column==2) || (row ==1 && column == 7) %>
+                  <%= image_tag 'knightblack.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 8 && column==2) || (row ==8 && column == 7) %>
+                  <%= image_tag 'knightwhite.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 1 && column==3) || (row ==1 && column == 6) %>
+                  <%= image_tag 'bishopblack.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 8 && column==3) || (row ==8 && column == 6) %>
+                  <%= image_tag 'bishopwhite.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 1 && column==4) %>
+                  <%= image_tag 'queenblack.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 8 && column==4) %>
+                  <%= image_tag 'queenwhite.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 1 && column==5) %>
+                  <%= image_tag 'kingblack.png', class: 'img-fluid' %>
+                <% end %>
+                <% if (row == 8 && column==5) %>
+                  <%= image_tag 'kingwhite.png', class: 'img-fluid' %>
+                <% end %>
+              <% end %>
+               </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+
+   

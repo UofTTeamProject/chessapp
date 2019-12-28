@@ -1,99 +1,78 @@
 class GamesController < ApplicationController
 	attr_accessor :is_Obstructed,:timepass
+	
 	def index
+		if current_user 
+			@games = Game.available
+			@game_user= Game.where('status = ? AND ( black_player_id = ? OR white_player_id = ? )', -1,current_user.id,current_user.id)
+			@game_user_won = Game.where(status:current_user.id)
+		end
 		
 	end
 
 	def new
-
+		@game=Game.new
 	end
 
 	def create
-    game = Game.create(white_player_id: current_user.id)
-    redirect_to game
+		#puts current_user.id
+    	@game=Game.create(white_player_id: current_user.id,status:-1)
+    	redirect_to game_path(@game)
 	end
 	
 	def show
 		#puts is_Obstructed?(4,1,3,5)
+		#puts "Hello" + params[:id].to_s
+		@game=Game.find_by_id(params[:id])
+		
+		if !@game.blank?
+			if !@game.black_player_id.nil? 
+				@black_player = User.find(@game.black_player_id)
+			else
+				@black_player = nil
+			end
+			@white_player = User.find(@game.white_player_id)
+			@pieces=@game.pieces
+		else
+			render plain: "#{status.to_s.titleize}", status: :not_found
+		end
 	end
 
 	def update
-
+		@game=Game.find(params[:id])
+		if @game.white_player_id == nil || @game.black_player_id == nil 
+			alert = "Why do you want to forfeit when your opponent do not exist?"
+			redirect_to game_path(@game), alert:alert
+		else
+			if @game.white_player_id == current_user.id
+				winner = @game.black_player_id
+			else
+				winner = @game.white_player_id
+			end
+			@game.update_attributes(status:winner)
+		end
+		redirect_to root_path
 	end
 
-  def join
-    game = Game.find(game_params[:id])
-    if !game.full? && current_user && game.white_player_id != current_user.id
-      game.black_player_id = current_user.id
-      game.save
-      redirect_to game
-    else
-      redirect_to root_path
-    end
-  end
-
-  private
-  def game_params
-    params.permit(:id)
-  end
+	def join
+		@game = Game.find(params[:id])
+		if !@game.full? && current_user && @game.white_player_id != current_user.id
+			@game.black_player_id = current_user.id
+			@game.save
+			redirect_to game_path(@game)
+		else
+			redirect_to root_path
+		end
+	end
 
 	private
 
-	def is_Obstructed(start_x,start_y,dest_x,dest_y)
-		#it is assumed that checks like both start and destiantion are not same are already done. Hence not checked here
-		#return
-		# { 
-		#	true : if there is obstruction
-		#   false : if there is no obstruction
-		#   "Invalid Input": if input is invalid
-		#}
-
-		#identify smaller and higher x and y position 
-		small_x,small_y,high_x,high_y = start_x,start_y,dest_x,dest_y
-		if start_x > dest_x; small_x,high_x = dest_x,start_x end
-		if start_y > dest_y; small_y,high_y = dest_y,start_y end
-		
-		#puts "small_x:" + small_x.to_s
-		#puts "small_y:" + small_y.to_s
-		#puts "high_x:" + high_x.to_s
-		#puts "high_y:" + high_y.to_s
-
-		if small_x == high_x
-			#check for vertical obstruction
-			#puts "Horizontal"
-			for i in small_y..(high_y-1) do
-				#puts "i:" + i.to_s
-				move = current_game.pieces.where("current_position = '#{small_x}*#{i+1}'").order('created_at DESC').first
-				if !move.nil?
-					return true
-				end 
-			end	
-		elsif small_y == high_y
-			#check for horizontal obstruction
-			#puts "Vertical"
-			for i in small_x..(high_x-1) do
-				#puts "i:" + i.to_s
-				move = current_game.pieces.where("current_position = '#{i+1}*#{small_y}'").order('created_at DESC').first
-				if !move.nil?
-					return true
-				end 
-			end
-		elsif (high_x-small_x) == (high_y-small_y)
-			#check for diagonal obstruction
-			#puts "Diagonal"
-			(high_x-small_x-1).abs.times do |i|
-				#puts "i:" + i.to_s
-				move = current_game.pieces.where("current_position = '#{i+small_x+1}*#{i+small_y+1}'").order('created_at DESC').first
-				if !move.nil?
-					return true
-				end 
-			end
-		else
-			return "Invalid Input"
-		end
-		#there is no obstruction 
-		return false
+	def game_params
+		params.permit(:id)
+		#params.require(:game).permit(:white_player_id, :black_player_id)
 	end
+
+	
 
 	def current_game
 		@current_game ||= Game.find(params[:id])

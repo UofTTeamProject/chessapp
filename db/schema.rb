@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_16_230302) do
+ActiveRecord::Schema.define(version: 2019_12_27_030006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,15 +41,16 @@ ActiveRecord::Schema.define(version: 2019_12_16_230302) do
   create_table "pieces", force: :cascade do |t|
     t.string "piece_type"
     t.string "piece_color"
-    t.string "starting_position"
+    t.integer "previous_x_pos"
     t.text "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "x_position"
     t.integer "y_position"
     t.boolean "captured", default: false
-    t.integer "game_id"
     t.string "type"
+    t.integer "game_id"
+    t.integer "previous_y_pos"
     t.index ["game_id"], name: "index_pieces_on_game_id"
   end
 

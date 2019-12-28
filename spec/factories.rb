@@ -1,26 +1,26 @@
 
 FactoryBot.define do
-  factory :king do
+  factory :king, class: "King" do
     
   end
 
-  factory :queen do
+  factory :bishop, class: "Bishop" do
     
   end
 
-  factory :rook do
+  factory :queen, class: "Queen" do
     
   end
 
-  factory :bishop do
+  factory :rook, class: "Rook" do
     
   end
 
-  factory :knight do
+  factory :knight, class: "Knight" do
     
   end
 
-  factory :pawn do
+  factory :pawn, class: "Pawn" do
     
   end
 
@@ -29,7 +29,7 @@ FactoryBot.define do
   end
 
   factory :piece do
-    game
+    game 
     piece_color {"white"}
     x_position {0}
     y_position {0}
