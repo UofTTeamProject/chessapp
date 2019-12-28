@@ -1,7 +1,7 @@
 class King < Piece
 
     validate :is_validmove?, on: :update
-    def is_validmove?(new_x, new_y)
+    def is_validmove?
         dest_x,dest_y = self.x_position,self.y_position
         previous_piece_move = Piece.find(self.id)
         start_x,start_y = previous_piece_move.x_position,previous_piece_move.y_position
