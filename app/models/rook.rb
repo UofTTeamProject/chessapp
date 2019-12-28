@@ -1,17 +1,24 @@
 class Rook < Piece
 
+  validate :is_validmove?, on: :update
 
-   def is_valid_move?(new_x, new_y)
-    return only_y_change?(new_x, new_y) || only_x_change?(new_x, new_y)
-   end
+  def is_validmove?
+    piece = Piece.find(self.id)
+    previous_x,previous_y= piece.x_position,piece.y_position
+    #puts "#{self.x_position} #{self.y_position} #{previous_x} #{previous_y}"
+    unless only_x_change?(previous_x,previous_y)  || only_y_change?(previous_x,previous_y)
+      errors[:piece_type] << "Invalid Rook Move"
+      return false
+    end
+  end
 
-   private
+  def only_y_change?(previous_x,previous_y)
+    return (self.y_position != previous_y && self.x_position == previous_x)
+  end
 
-   def only_y_change?(new_x, new_y) 
-     return y_position != new_y && x_position == new_x
-   end
+  def only_x_change?(previous_x,previous_y)
+    return (self.x_position != previous_x && self.y_position == previous_y)
+  end
 
-   def only_x_change?(new_x, new_y)
-     return x_position != new_x && y_position == new_y
-   end
+
 end

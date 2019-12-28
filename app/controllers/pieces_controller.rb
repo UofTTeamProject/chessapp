@@ -94,7 +94,15 @@ class PiecesController < ApplicationController
 			
 			(high_x-small_x-1).abs.times do |i|
 				#puts "i:" + i.to_s + " current_game: "+ current_game.id.to_s
-				move = Piece.where("x_position = '#{i+small_x+1}' AND y_position = '#{i+small_y+1}' AND game_id = '#{current_game.id} '").first
+				i_x, i_y = i+1,i+1
+				if dest_x < start_x
+					i_x = -1 * i_x
+				end
+				if dest_y <start_y
+					i_y = -1 * i_y
+				end
+
+				move = Piece.where("x_position = '#{i_x+start_x}' AND y_position = '#{i_y+start_y}' AND game_id = '#{current_game.id} '").first
 				if !move.nil?
 					return true
 				end 

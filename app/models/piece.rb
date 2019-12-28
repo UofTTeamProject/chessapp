@@ -5,9 +5,10 @@ class Piece < ApplicationRecord
     #main base class
   def move_to(new_x, new_y)
     captured_piece = Piece.where(game_id: self.game_id, x_position: new_x, y_position: new_y, captured:false).where.not(id:self.id)
-    #puts "Hello Count "+ captured_piece.count.to_s 
+    puts "Hello Count "+ captured_piece.count.to_s 
     #print captured_piece.id.to_s + " " + captured_piece.piece_color + " " +self.piece_color
     if (captured_piece.first && captured_piece.first.piece_color != self.piece_color) || !captured_piece.first
+      puts "Hello"
       self.previous_x_pos = self.x_position
       self.previous_y_pos = self.y_position
       self.x_position = new_x
@@ -15,7 +16,7 @@ class Piece < ApplicationRecord
 
       if self.save 
         if self.type=="Pawn" && ((self.x_position==6 && self.piece_color=="white") || (self.x_position==3 && self.piece_color=="black"))
-          self.check_Enpassant
+          #self.check_Enpassant
         end
         
         if captured_piece.first 

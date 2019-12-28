@@ -10,7 +10,7 @@ RSpec.describe Pawn, type: :model do
           status:-1)
     end
     describe "Pawn#update" do
-        it "should return true if pawn is moved 1/2 position vertically" do
+        it "should return true if pawn is moved 1/2 position vertically in forward direction" do
             piece = FactoryBot.create(:pawn,game:@game,x_position:3,y_position:3,piece_color:"white")
             #puts piece.piece_color
             move = piece.move_to(4,3)

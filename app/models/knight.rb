@@ -1,9 +1,15 @@
 class Knight < Piece
-    def is_valid_move?(new_x, new_y)
-      return ((long_move?(x_position, new_x) && short_move?(y_position, new_y)) || 
-      (long_move?(y_position, new_y) && short_move?(x_position, new_x)))
+    
+    validate :is_validmove?, on: :update
+    
+    def is_validmove?
+      dest_x,dest_y = self.x_position.to_i,self.y_position.to_i
+      previous_piece_move = Piece.find(self.id)
+      start_x,start_y = previous_piece_move.x_position.to_i,previous_piece_move.y_position.to_i
+      
+      return ((long_move?(start_x, dest_x) && short_move?(start_y, dest_y)) || 
+      (long_move?(start_y, dest_y) && short_move?(start_y, dest_x)))
     end
-
 
     private
 
