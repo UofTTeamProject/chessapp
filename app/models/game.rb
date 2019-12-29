@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
   has_many :moves
+
   belongs_to :user
   has_many :pieces
   after_create :prepopulate_board
@@ -21,6 +22,10 @@ class Game < ApplicationRecord
     end
   end
 
+  def self.find_by_player_id(player_id)
+    where(white_player_id: player_id).or(where(black_player_id: player_id))
+  end
+  
   def prepopulate_board #displays pieces 
     (1..8).each do |x|
       Pawn.create(x_position: 2, y_position: x, game_id:self.id, image_url: 'pawnwhite.png', piece_color: 'white')
@@ -32,10 +37,11 @@ class Game < ApplicationRecord
     Rook.create(x_position: 8, y_position: 1, game_id:self.id, image_url: 'rookblack.png', piece_color: 'black')
     Rook.create(x_position: 8, y_position: 8, game_id:self.id, image_url: 'rookblack.png', piece_color: 'black')
 
-    Knight.create(x_position: 1, y_position: 2, game_id:self.id, image_url: 'Knightwhite.png', piece_color: 'white')
-    Knight.create(x_position: 1, y_position: 7, game_id:self.id, image_url: 'Knightwhite.png', piece_color: 'white')
-    Knight.create(x_position: 8, y_position: 2, game_id:self.id, image_url: 'Knightblack.png', piece_color: 'black')
-    Knight.create(x_position: 8, y_position: 7, game_id:self.id, image_url: 'Knightblack.png', piece_color: 'black')
+
+    Knight.create(x_position: 1, y_position: 2, game_id:self.id, image_url: 'knightwhite.png', piece_color: 'white')
+    Knight.create(x_position: 1, y_position: 7, game_id:self.id, image_url: 'knightwhite.png', piece_color: 'white')
+    Knight.create(x_position: 8, y_position: 2, game_id:self.id, image_url: 'knightblack.png', piece_color: 'black')
+    Knight.create(x_position: 8, y_position: 7, game_id:self.id, image_url: 'knightblack.png', piece_color: 'black')
 
     Bishop.create(x_position: 1, y_position: 3, game_id:self.id, image_url: 'bishopwhite.png', piece_color: 'white')
     Bishop.create(x_position: 1, y_position: 6, game_id:self.id, image_url: 'bishopwhite.png', piece_color: 'white')

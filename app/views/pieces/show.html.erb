@@ -1,0 +1,46 @@
+
+
+<h1>welcome to Game No. <%= @game.id %> </h1>
+<div class="board" style="position:relative">
+  <table>
+    <tbody>
+      <% (1..8).each do |column| %>
+        <tr id = <%= column %>>
+          <% (1..8).each do |row| %>
+            <td data-x-coord = <%= row %> data-y-coord = <%= column %> class = <%= "#{(column % 2 == row % 2 ? "white-square" : "black-square")}" %> >
+              <% @piece = @pieces.select{ |piece_temp| piece_temp.x_position==column && piece_temp.y_position==row && piece_temp.captured==false } %>
+              <% if !@piece[0].nil? %>
+                <% if @piece[0].id == @selected_piece.id %>
+                    <% selected_class = "piece-selected" %>
+                <% else %>
+                    <% selected_class = "piece" %> 
+                <% end %>
+                <div class=<%= selected_class %> data-url="<%= game_piece_path(@game, @piece[0])%>" data-piece-type="<%= @piece[0].type %>"> 
+                  <%= image_tag @piece[0].image_url, class: 'img-fluid' %>
+                </div>
+                <% if @piece[0].piece_color != @selected_piece.piece_color %>
+                    <%= link_to "Move Here",{ :action => 'update', :controller => 'pieces', :game_id => @selected_piece.game_id,id: @selected_piece.id, :piece => {x_position: column , y_position: row}  }, :method => :put ,class: 'btn btn-primary' %>    
+                <% end %>
+              <% else %>
+                <%= link_to "Move Here",{ :action => 'update', :controller => 'pieces', :game_id => @selected_piece.game_id,id: @selected_piece.id, :piece => {x_position: column , y_position: row}  }, :method => :put ,class: 'btn btn-primary' %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="player-info">
+    <span>Black Player: 
+      <% if !@black_player.nil? %>
+        <%= @black_player.email %>
+      <% end %>
+    </span>
+    <p></p>
+    <span>White Player: 
+      <% if !@white_player.nil? %>
+        <%= @white_player.email %>
+      <% end %>
+    </span>
+</div>

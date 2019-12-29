@@ -7,7 +7,6 @@ RSpec.describe Game, type: :model do
       game.white_player_id = 1
       game.save
       available_games = Game.available
-      puts available_games.inspect
       assert available_games.first == game
     end
 
@@ -65,6 +64,40 @@ RSpec.describe Game, type: :model do
       game.save
       game.reload
       expect(game.full?).to be false
+    end
+  end
+
+  describe "Game#find_by_player_id" do
+    it "should show the game if you are the white player" do
+      user1 = FactoryBot.create(:user)
+      game = FactoryBot.create(:game, white_player_id: user1.id)
+      found_game = Game.find_by_player_id(user1.id).first
+      expect(game.id).to eq(found_game.id)
+    end
+
+    it "should show the game if you are the black player" do
+      user1 = FactoryBot.create(:user)
+      game = FactoryBot.create(:game, black_player_id: user1.id)
+      game=FactoryBot.create(:game, black_player_id: user1.id)
+      found_game = Game.find_by_player_id(user1.id).first
+      expect(game.id).to eq(found_game.id)
+    end
+
+    it "should not show the games that you do not belong to" do
+      user1 = FactoryBot.create(:user)
+      user2 = FactoryBot.create(:user)
+      user3 = FactoryBot.create(:user)
+      FactoryBot.create(:game, white_player_id: user1.id, black_player_id: user2.id)
+      found_games = Game.find_by_player_id(user3.id)
+      expect(found_games.count).to eq(0)
+    end
+
+    it "should show all the games that you belong to" do
+      user1 = FactoryBot.create(:user)
+      FactoryBot.create(:game, white_player_id: user1.id)
+      FactoryBot.create(:game, white_player_id: user1.id)
+      found_games = Game.find_by_player_id(user1.id)
+      expect(found_games.count).to eq(2)
     end
   end
 end
