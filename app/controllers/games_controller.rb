@@ -4,7 +4,6 @@ class GamesController < ApplicationController
 	def index
 		@games = Game.available
 		@game_user= Game.where(black_player_id:current_user.id).or(Game.where(white_player_id:current_user.id))
-		
 	end
 
 	def new
@@ -12,10 +11,11 @@ class GamesController < ApplicationController
 	end
 
 	def create
-		puts current_user.id
+
     	@game=Game.create(white_player_id: current_user.id)
-    	redirect_to game_path(@game)
+    	redirect_to game_path
 	end
+
 	
 	def show
 		#puts is_Obstructed?(4,1,3,5)
@@ -33,11 +33,13 @@ class GamesController < ApplicationController
 		else
 			render plain: "#{status.to_s.titleize}", status: :not_found
 		end
+
 	end
 
 	def update
 		@game=Game.find(params[:id])
 	end
+
 
 	def join
 		@game = Game.find(params[:id])
@@ -50,7 +52,6 @@ class GamesController < ApplicationController
 		end
 	end
 
-	private
 
 	def game_params
 		params.permit(:id)

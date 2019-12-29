@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
   has_many :moves
-  #belongs_to :user
+
+  belongs_to :user
   has_many :pieces
   after_create :prepopulate_board
   scope :available, -> {where(white_player_id: nil).or(where(black_player_id: nil))}
@@ -35,6 +36,7 @@ class Game < ApplicationRecord
     Rook.create(x_position: 1, y_position: 8, game_id:self.id, image_url: 'rookwhite.png', piece_color: 'white')
     Rook.create(x_position: 8, y_position: 1, game_id:self.id, image_url: 'rookblack.png', piece_color: 'black')
     Rook.create(x_position: 8, y_position: 8, game_id:self.id, image_url: 'rookblack.png', piece_color: 'black')
+
 
     Knight.create(x_position: 1, y_position: 2, game_id:self.id, image_url: 'knightwhite.png', piece_color: 'white')
     Knight.create(x_position: 1, y_position: 7, game_id:self.id, image_url: 'knightwhite.png', piece_color: 'white')
