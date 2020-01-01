@@ -19,7 +19,8 @@ class PiecesController < ApplicationController
 		@piece=Piece.find_by_id(params[:id])
 		if !@piece.blank?
 			isObstructed = is_Obstructed(@piece.x_position,@piece.y_position,piece_params[:x_position].to_i,piece_params[:y_position].to_i)
-			if isObstructed == false
+			puts @piece.type
+			if isObstructed == false || @piece.type=="Knight"
 				move_status=@piece.move_to(piece_params[:x_position],piece_params[:y_position])
 				if !move_status
 					render plain: "Not a valid Move",status: :not_acceptable
