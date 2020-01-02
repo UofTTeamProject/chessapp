@@ -17,12 +17,15 @@ $(function(){
             $(droppedOn).empty();
             $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn);
             $(dropped).show();
+            console.log(jqXHR);
+            $(".player-info").empty().append(data.player_data);
+
           },
           error: function(jqXHR,textStatus,errorThrown){
             $(dropped).css({top: 0, left: 0});
             $(dropped).show();
-            alert(jqXHR.responseText);
-            
+            console.log(errorThrown);
+            console.log(jqXHR);
           },
         });
         
@@ -88,11 +91,13 @@ $(function(){
       </span>
       <div>
         <% @pieces_captured = @pieces.select{ |piece_temp| piece_temp.captured==true && piece_temp.piece_color=="white" } %>
-          <% @pieces_captured.each do |piece| %>
-            <div data-piece-type="<%= piece.type %>">
-              <%= image_tag piece.image_url, class: 'img-fluid ',style: "height:40px;width:40px" %>
-            </div>
-        <% end %>
+          <div>
+            <% @pieces_captured.each do |piece| %>
+              
+                <%= image_tag piece.image_url, class: 'img-fluid ',style: "height:40px;width:40px" %>
+            <% end %>
+          </div>
+          
       </div>
     <div>
     

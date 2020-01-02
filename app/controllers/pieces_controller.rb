@@ -24,6 +24,8 @@ class PiecesController < ApplicationController
 				move_status=@piece.move_to(piece_params[:x_position],piece_params[:y_position])
 				if !move_status
 					render plain: "Not a valid Move",status: :not_acceptable
+				else
+					render json: {'player_data' => capturepieceSection(@piece)}, status: :partial_content
 				end
 			else
 				if isObstructed==true
@@ -115,6 +117,54 @@ class PiecesController < ApplicationController
 		return false
 	end
 
+	def capturepieceSection(piece_moved)
+		@game = Game.find_by_id(piece_moved.game_id)
+		if !@game.black_player_id.nil? 
+			@black_player = User.find(@game.black_player_id)
+		else
+			@black_player = nil
+		end
+		@white_player = User.find(@game.white_player_id)
+		htmltext = '<div class="black-player-zone">'
+		htmltext << '<span>Black Player:' 
+		if !@black_player.nil?
+		  htmltext << @black_player.email 
+		  if @black_player == current_user
+			htmltext << view_context.link_to("Forfeit", game_path(@game, forfeit:0),:method => :put, class: 'btn btn-primary') 
+		  end
+		end
+		htmltext << '</span>'
+		htmltext << '<div>'
+		@pieces_captured = @game.pieces.where('captured = ? AND piece_color = ?',true,"black")
+		htmltext <<	'<div>'
+		@pieces_captured.each do |piece| 
+			htmltext << view.context.image_tag(piece.image_url, class: 'img-fluid ',style: "height:40px;width:40px")
+		end
+		htmltext << '</div>'
+		htmltext << '</div>'
+		htmltext << '</div>'
+		htmltext << '<p></p>'
+		htmltext << '<div class="white-player-zone">'
+		htmltext << '<span>White Player:' 
+		if !@white_player.nil? 
+			htmltext << @white_player.email 
+			if @white_player== current_user
+				htmltext << view_context.link_to("Forfeit", game_path(@game, forfeit:0),:method => :put, class: 'btn btn-primary') 
+			end
+		end
+		htmltext << '</span>'
+		htmltext << '<div>'
+		@pieces_captured = @game.pieces.where('captured = ? AND piece_color = ?',true,"white")
+		htmltext << '<div>'
+		@pieces_captured.each do |piece|
+			htmltext << view_context.image_tag(piece.image_url, class: 'img-fluid ',style: "height:40px;width:40px")
+		end
+		htmltext << '</div>'
+		htmltext << '</div>'
+		htmltext << '<div>'  
+		return htmltext
+
+	end
 	def current_game
 		@current_game ||= Game.find(params[:game_id])
 	end
