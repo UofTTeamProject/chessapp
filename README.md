@@ -69,4 +69,10 @@ $ rails server -b 0.0.0.0 -p 3000
 * [jQuery](https://jquery.com/) - Javascript Framework
 * [devise](https://github.com/heartcombo/devise), [RSpec](https://rspec.info/), [factorybot](https://github.com/thoughtbot/factory_bot) - Ruby gems
 
+## Authors
 
+See also the list of [contributors](https://github.com/UofTTeamProject/chessapp/graphs/contributors) who participated in this project.
+
+## Planned Updates
+
+We hope to make updates to improve the UI/UX, and add more pricing functionality and features (listing of online users, chat application etc). We also have plans to build out a mobile version of the application. 
