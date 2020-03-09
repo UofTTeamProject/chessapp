@@ -82,3 +82,4 @@ end
 
 gem 'omniauth-google-oauth2'
 gem 'figaro'
+gem 'font-awesome-rails'
