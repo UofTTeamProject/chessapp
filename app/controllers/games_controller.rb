@@ -19,6 +19,7 @@ class GamesController < ApplicationController
     	@game=Game.create(white_player_id: current_user.id,status:-1)
     	redirect_to game_path(@game)
 	end
+
 	
 	def show
 		#puts is_Obstructed?(4,1,3,5)
@@ -36,6 +37,7 @@ class GamesController < ApplicationController
 		else
 			render plain: "#{status.to_s.titleize}", status: :not_found
 		end
+
 	end
 
 	def update
@@ -55,6 +57,7 @@ class GamesController < ApplicationController
 		
 	end
 
+
 	def join
 		@game = Game.find(params[:id])
 		if !@game.full? && current_user && @game.white_player_id != current_user.id
@@ -66,7 +69,6 @@ class GamesController < ApplicationController
 		end
 	end
 
-	private
 
 	def game_params
 		params.permit(:id)

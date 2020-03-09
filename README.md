@@ -1,24 +1,78 @@
-# README
+# Chess
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Full-stack web based chess application with ability for user to be a part of many games at a time with multiple users. Users can use their GMail authentication to signup within the application
 
-Things you may want to cover:
+## [Try it yourself](https://uoftchessapp.herokuapp.com/) 
 
-* Ruby version
 
-* System dependencies
+## Getting Started
 
-* Configuration
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-* Database creation
+### Prerequisites
 
-* Database initialization
+You will need to setup Vagrant environment to run the application on local machine. To find the installation instructions for your OS, visit :
 
-* How to run the test suite
+```
+https://github.com/FirehoseProject/firehose-vagrant-rails5
+```
+### Installing
 
-* Services (job queues, cache servers, search engines, etc.)
+Initiate the vagrant environment.
 
-* Deployment instructions
+Git clone the repository to your local machine in the src folder :
 
-* ...
+HTTPS:
+```
+$ git clone https://github.com/UofTTeamProject/chessapp.git
+```
+
+SSH:
+
+```
+$ git clone git@github.com:UofTTeamProject/chessapp.git
+```
+
+Open application folder created by git clone command:
+
+```
+$ cd chessapp
+```
+
+Install all the gems used in application:
+
+```
+$ bundle install
+```
+
+Install the application database and create all the tables:
+
+```
+$ rails db:create
+$ rails db:migrate
+```
+
+You will then be able to start the app locally by runnning:
+
+```
+$ rails server -b 0.0.0.0 -p 3000
+```
+
+## Built With
+
+* [Ruby on Rails](https://rubyonrails.org/) - Web framework
+* [PostgreSQL](https://www.postgresql.org/) - Database
+* [HTML5](https://en.wikipedia.org/wiki/HTML5) - Web markup language
+* [CSS3](http://www.css3.info/) - Webpage Style Sheet language
+* [Bootstrap](https://getbootstrap.com/) - CSS Framework
+* [Javascript](https://www.javascript.com/) - Web Programming language
+* [jQuery](https://jquery.com/) - Javascript Framework
+* [devise](https://github.com/heartcombo/devise), [RSpec](https://rspec.info/), [factorybot](https://github.com/thoughtbot/factory_bot) - Ruby gems
+
+## Authors
+
+See also the list of [contributors](https://github.com/UofTTeamProject/chessapp/graphs/contributors) who participated in this project.
+
+## Planned Updates
+
+We hope to make updates to improve the UI/UX, and add more pricing functionality and features (listing of online users, chat application etc). We also have plans to build out a mobile version of the application. 
